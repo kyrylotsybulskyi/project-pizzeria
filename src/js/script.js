@@ -86,11 +86,12 @@
     }
     initAccordion(){
       const thisProduct = this;
-      
+      console.log('thisProduct: ', thisProduct);
       /* find the clickable trigger (the element that should react to clicking) */
       
       const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-
+      
+      console.log('clickableTrigger: ', clickableTrigger);
       /* START: add event listener to clickable trigger on event click */
       
       clickableTrigger.addEventListener('click', function(event) {
@@ -101,22 +102,24 @@
 
         /* find active product (product that has active class) */
 
-        const activeProduct = document.querySelector('select.menuProductActive');
-
+        const activeProduct = thisProduct.element.querySelector(classNames.menuProduct.wrapperActive);
+        console.log('activeProduct : ', activeProduct );
 
         /* if there is active product and it's not thisProduct.element, remove class active from it */
 
         if (activeProduct !== null && activeProduct != thisProduct.element){
 
-          activeProduct.classList.remove('active');
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
       
           /* toggle active class on thisProduct.element */
 
+         
         }
 
-        thisProduct.element.classList.toggle('active');        
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);     
     
       });
+      
     }
   }
   
@@ -125,6 +128,7 @@
       const thisApp = this;
 
       console.log('thisApp.data:', thisApp.data);
+
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
       }
@@ -137,6 +141,7 @@
 
       thisApp.data = dataSource;
     },
+
     init: function(){
       const thisApp = this;
       console.log('*** App starting ***');
