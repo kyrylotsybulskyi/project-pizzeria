@@ -182,7 +182,7 @@
         event.preventDefault();
         thisProduct.processOrder();
       });
-    };
+    }
 
     processOrder() {
 
@@ -205,17 +205,37 @@
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log(optionId, option);
+          //console.log('optionId: ', optionId);
 
           // if paramId.optionId there is not in formData {
+            console.log(optionId, option);
+            debugger;  
+            
+            
+          if (formData.hasOwnProperty(optionId)) {
 
             // if default is true price is lower
 
-              // else price is the same
+            
 
+            if (option['default'] !== true) {
+
+              price = price + option.priceElem;
+
+            }
+
+            /*else {
+
+              console.log('price: ', price);
+            }*/
             // else if default is not true price is higher
+            
+            else if (option.default == true) {
 
-              // else prise is the same
+              price = price - option.priceElem;
+            }
+          }
+
 
 
         }
