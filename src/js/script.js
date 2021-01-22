@@ -205,38 +205,26 @@
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          //console.log('optionId: ', optionId);
+          console.log('optionId: ', optionId);
 
-          // if paramId.optionId there is not in formData {
-            console.log(optionId, option);
-            debugger;  
+          // check if there is param with a name of paramId in formData and if it includes optionId
+         
+          if (formData[paramId] && formData[paramId].includes(optionId)) {
             
-            
-          if (formData.hasOwnProperty(optionId)) {
+            // check if the option is not default
 
-            // if default is true price is lower
+            if (!option.default) {
 
-            
+              // add option price to price variable
 
-            if (option['default'] !== true) {
-
-              price = price + option.priceElem;
+              price = price + option.price;
 
             }
-
-            /*else {
-
-              console.log('price: ', price);
-            }*/
-            // else if default is not true price is higher
             
-            else if (option.default == true) {
+          } else if (option.default) {
 
-              price = price - option.priceElem;
-            }
+            price = price - option.price;
           }
-
-
 
         }
       }
@@ -245,7 +233,6 @@
       thisProduct.priceElem.innerHTML = price;
     }
   }
-
 
   const app = {
     initMenu: function () {
