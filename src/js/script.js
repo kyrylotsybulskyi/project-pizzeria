@@ -269,17 +269,32 @@
       console.log('constructor arguments:', element);
 
       thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
     }
 
     getElements(element){
       const thisWidget = this;
-      debugger;
+      //debugger;
 
       thisWidget.elment = element;
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.inkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
 
+    }
+
+    SetValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /* TODO: Add validation */
+
+      if (thisWidget.value !== newValue && !isNaN(newValue)) {
+        thisWidget.value = newValue;
+      }
+      
+      thisWidget.input.value = thisWidget.value;
     }
   }
 
