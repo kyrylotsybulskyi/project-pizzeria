@@ -64,6 +64,7 @@
       thisProduct.getElements();
       //thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
@@ -187,6 +188,8 @@
       });
     }
 
+
+
     initAmountWidget() {
 
       const thisProduct = this;
@@ -216,15 +219,15 @@
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
           //console.log('optionId: ', optionId);
-          
+
           const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
           //console.log('optionImage: ', optionImage);
           //debugger;
 
           // check if there is param with a name of paramId in formData and if it includes optionId
-         
+
           if (formData[paramId] && formData[paramId].includes(optionId)) {
-            
+
             // check if the option is not default
 
             if (optionImage) {
@@ -233,7 +236,7 @@
             } /*else {optionImage.classList.remove('.active');
             }*/
 
-            
+
             if (!option.default) {
 
               // add option price to price variable
@@ -242,13 +245,14 @@
 
 
             }
-            
+
           } else if (option.default) {
 
             price = price - option.price;
 
             optionImage.classList.remove(classNames.menuProduct.imageVisible);
-          } else if (optionImage) {optionImage.classList.remove(classNames.menuProduct.imageVisible);
+          } else if (optionImage) {
+            optionImage.classList.remove(classNames.menuProduct.imageVisible);
           }
 
         }
@@ -258,21 +262,23 @@
       thisProduct.priceElem.innerHTML = price;
     }
 
-    
+
   }
 
   class AmountWidget {
-    constructor(element){
+    constructor(element) {
       const thisWidget = this;
 
       console.log('AmountWidget: ', thisWidget);
       console.log('constructor arguments:', element);
 
       thisWidget.getElements(element);
+      thisWidget.initActions(event);
       thisWidget.setValue(thisWidget.input.value);
+      
     }
 
-    getElements(element){
+    getElements(element) {
       const thisWidget = this;
       //debugger;
 
@@ -283,20 +289,40 @@
 
     }
 
-    SetValue(value){
+    setValue(value) {
       const thisWidget = this;
 
       const newValue = parseInt(value);
 
       /* TODO: Add validation */
-
+      
       if (thisWidget.value !== newValue && !isNaN(newValue)) {
         thisWidget.value = newValue;
       }
-      
+
       thisWidget.input.value = thisWidget.value;
     }
+
+    initActions() {
+      const thisWidget = this;
+      
+      //debugger;
+      thisWidget.input.addEventListener('change', function () {
+        setValue(thisWidget.value);
+      });
+      thisWidget.linkDecrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        setValue(thisWidget.value - 1);
+      });
+      thisWidget.linkIncrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        setValue(thisWidget.value + 1);
+      });
+    }
   }
+
+
+
 
   const app = {
     initMenu: function () {
@@ -327,7 +353,7 @@
       thisApp.initMenu();
     },
   };
-  
+
   app.init();
 
 }
