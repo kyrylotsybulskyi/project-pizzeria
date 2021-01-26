@@ -314,10 +314,9 @@
     initActions() {
       const thisWidget = this;
       
-      
+      //debugger;
       thisWidget.input.addEventListener('change', function (event) {
         console.log('thisWidget.input.value: ', thisWidget.input.value);
-        debugger;
         thisWidget.setValue(thisWidget.value);
       });
       thisWidget.linkDecrease.addEventListener('click', function (event) {
