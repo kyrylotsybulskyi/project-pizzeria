@@ -308,15 +308,15 @@
       
       //debugger;
       thisWidget.input.addEventListener('change', function () {
-        setValue(thisWidget.value);
+        thisWidget.setValue(thisWidget.value);
       });
       thisWidget.linkDecrease.addEventListener('click', function (event) {
         event.preventDefault();
-        setValue(thisWidget.value - 1);
+        thisWidget.setValue(thisWidget.value - 1);
       });
       thisWidget.linkIncrease.addEventListener('click', function (event) {
         event.preventDefault();
-        setValue(thisWidget.value + 1);
+        thisWidget.setValue(thisWidget.value + 1);
       });
     }
   }
