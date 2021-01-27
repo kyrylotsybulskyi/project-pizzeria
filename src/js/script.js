@@ -43,8 +43,8 @@
   const settings = {
     amountWidget: {
       defaultValue: 1,
-      defaultMin: 1,
-      defaultMax: 9,
+      defaultMin: 0,
+      defaultMax: 10,
     }
   };
 
@@ -290,6 +290,7 @@
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+      thisWidget.value = settings.amountWidget.defaultValue;
 
     }
 
@@ -303,6 +304,7 @@
       
       if (thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
         console.log('thisWidget.value: ', thisWidget.value);
+        
         thisWidget.value = newValue;
         
       }
@@ -314,9 +316,11 @@
     initActions() {
       const thisWidget = this;
       
-      //debugger;
-      thisWidget.input.addEventListener('change', function (event) {
+      
+      thisWidget.input.addEventListener('change', function () {
+        debugger;
         console.log('thisWidget.input.value: ', thisWidget.input.value);
+        
         thisWidget.setValue(thisWidget.value);
       });
       thisWidget.linkDecrease.addEventListener('click', function (event) {
