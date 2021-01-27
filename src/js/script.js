@@ -308,9 +308,9 @@
         thisWidget.value = newValue;
         
       }
-      thisWidget.announce();
-      thisWidget.input.value = thisWidget.value;
       
+      thisWidget.input.value = thisWidget.value;
+      thisWidget.announce();
     }
 
     initActions() {
@@ -318,14 +318,15 @@
       
       
       thisWidget.input.addEventListener('change', function () {
-        debugger;
+        
         console.log('thisWidget.input.value: ', thisWidget.input.value);
         
-        thisWidget.setValue(thisWidget.value);
+        thisWidget.setValue(thisWidget.input.value);
       });
       thisWidget.linkDecrease.addEventListener('click', function (event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value - 1);
+        debugger;
       });
       thisWidget.linkIncrease.addEventListener('click', function (event) {
         event.preventDefault();
