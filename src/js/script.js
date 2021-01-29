@@ -128,14 +128,15 @@
 
     getElements() {
       const thisProduct = this;
+      thisProduct.dom = {};
 
-      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.dom.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.dom.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.dom.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       //console.log('thisProduct.accordionTrigger: ', thisProduct.accordionTrigger);
-      thisProduct.accordionTrigger.addEventListener('click', function (event) {
+      thisProduct.dom.accordionTrigger.addEventListener('click', function (event) {
 
         /* prevent default action for event */
 
@@ -157,10 +158,10 @@
 
         }
 
-        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+        thisProduct.dom.element.classList.toggle(classNames.menuProduct.wrapperActive);
 
       });
-      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.dom.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
@@ -218,7 +219,7 @@
         });
       }
 
-      thisProduct.cartButton.addEventListener('click', function (event) {
+      thisProduct.dom.cartButton.addEventListener('click', function (event) {
         event.preventDefault();
         thisProduct.processOrder();
       });
@@ -259,7 +260,7 @@
           const option = param.options[optionId];
           //console.log('optionId: ', optionId);
 
-          const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+          const optionImage = thisProduct.dom.imageWrapper.querySelector('.' + paramId + '-' + optionId);
           //console.log('optionImage: ', optionImage);
           //debugger;
 
@@ -301,7 +302,7 @@
 
       /* muliply price by amount */
       price *= thisProduct.amountWidget.value;
-      thisProduct.priceElem.innerHTML = price;
+      thisProduct.dom.priceElem.innerHTML = price;
     }
 
 
