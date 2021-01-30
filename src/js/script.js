@@ -272,9 +272,7 @@
             if (optionImage) {
 
               optionImage.classList.add(classNames.menuProduct.imageVisible);
-            } /*else {optionImage.classList.remove('.active');
-            }*/
-
+            }
 
             if (!option.default) {
 
@@ -286,10 +284,12 @@
             }
 
           } else if (option.default) {
-
+            //debugger;
             price = price - option.price;
-
-            optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            console.log('optionImage: ', optionImage);
+            if (optionImage) {
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
           } else if (optionImage) {
             optionImage.classList.remove(classNames.menuProduct.imageVisible);
           }
@@ -306,13 +306,14 @@
       thisProduct.dom.priceElem.innerHTML = price;
     }
 
-    addToCart(){
+    addToCart() {
       const thisProduct = this;
 
       app.cart.add(thisProduct.prepareCartProduct());
+      //app.cart.add(thisProduct.prepareCartProductParams());
     }
 
-    prepareCartProduct(){
+    prepareCartProduct() {
       const thisProduct = this;
 
       const productSummary = {};
@@ -327,10 +328,56 @@
 
       productSummary.price = thisProduct.price;
 
-      productSummary.params = {};
-      console.log('productSummary: ', productSummary);
-      console.log('thisProduct', thisProduct);
+      productSummary.params = thisProduct.prepareCartProductParams();
+
       return productSummary;
+    }
+
+    prepareCartProductParams() {
+      const thisProduct = this;
+
+      const params = {};
+
+      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      //console.log('formData', formData);
+
+
+      // for every category (param)...
+      for (let paramId in thisProduct.data.params) {
+
+        const param = thisProduct.data.params[paramId];
+
+
+        // create category in params const eg.params = {
+        //  ingridients: { name: 'Ingredients', options: {}}}
+        params[paramId] = {
+          name: param.label,
+          options: {}
+        }
+
+        // for every option in this category
+        for (let optionId in param.options) {
+          
+          const option = param.options[optionId];
+          
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+
+          // check if there is param with a name of paramId in formData and if it includes optionId
+
+          if (optionSelected) {
+            //params[paramId].options = {
+            //  label: option.label = formData[paramId],
+            //};
+            params.paramId.options = formData[paramId];
+            console.log('params[paramId].options: ',params[paramId].options);
+
+          }
+
+        }
+      }
+
+      return params;
     }
 
 
