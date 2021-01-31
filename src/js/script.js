@@ -286,7 +286,7 @@
           } else if (option.default) {
             //debugger;
             price = price - option.price;
-            console.log('optionImage: ', optionImage);
+
             if (optionImage) {
               optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
@@ -336,48 +336,48 @@
     prepareCartProductParams() {
       const thisProduct = this;
 
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
       const params = {};
 
-      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
-      const formData = utils.serializeFormToObject(thisProduct.form);
-      //console.log('formData', formData);
-
-
-      // for every category (param)...
+      // for every category (param)
       for (let paramId in thisProduct.data.params) {
-
         const param = thisProduct.data.params[paramId];
 
 
-        // create category in params const eg.params = {
-        //  ingridients: { name: 'Ingredients', options: {}}}
+        // create category in params 
+
+        const params = { ingredients: { name: 'Ingredients', options: {} } }
+        //console.log('params: ',params);
+
         params[paramId] = {
           name: param.label,
           options: {}
-        }
+        };
+        //console.log('params[paramId].options: ',params[paramId].options);
 
         // for every option in this category
         for (let optionId in param.options) {
-          
+
           const option = param.options[optionId];
-          
+
+          debugger;
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
-          // check if there is param with a name of paramId in formData and if it includes optionId
-
           if (optionSelected) {
+            //console.log('option: ', option);
             //params[paramId].options = {
             //  label: option.label = formData[paramId],
             //};
-            params.paramId.options = formData[paramId];
-            console.log('params[paramId].options: ',params[paramId].options);
-
+            params[paramId].options = formData[paramId];
+            //console.log('params[paramId].options: ', params[paramId].options);
+    
           }
 
         }
       }
 
-      return params;
+    return params;
     }
 
 
