@@ -335,7 +335,7 @@
 
     prepareCartProductParams() {
       const thisProduct = this;
-
+      console.log('thisProduct: ', thisProduct);
       const formData = utils.serializeFormToObject(thisProduct.form);
       console.log('formData', formData);
       const params = {};
@@ -347,19 +347,19 @@
 
         // create category in params 
 
-        const params = { ingredients: { name: 'Ingredients', options: {} } }
+        //const params = { ingredients: { name: param.label, options: {} } };
         //console.log('params: ',params);
 
         params[paramId] = {
-          name: param.label,
+          label: param.label,
           options: {}
         };
-        //console.log('params[paramId].options: ',params[paramId].options);
+        console.log('params[paramId]: ',params[paramId]);
 
         // for every option in this category
         for (let optionId in param.options) {
 
-          const option = param.options[optionId];
+          //const option = param.options[optionId];
 
           debugger;
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
@@ -369,15 +369,15 @@
             //params[paramId].options = {
             //  label: option.label = formData[paramId],
             //};
-            params[paramId].options = formData[paramId];
-            //console.log('params[paramId].options: ', params[paramId].options);
+            params[paramId].options[optionId] = param.options[optionId].label;
+            console.log('param.options[optionId.label]: ', param.options[optionId].label);
     
           }
 
         }
       }
 
-    return params;
+      return params;
     }
 
 
