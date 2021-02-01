@@ -108,7 +108,7 @@
     }
     renderInMenu() {
       const thisProduct = this;
-
+debugger;
       /* generate HTML based on template */
 
       const generatedHTML = templates.menuProduct(thisProduct.data);
@@ -354,14 +354,14 @@
           label: param.label,
           options: {}
         };
-        console.log('params[paramId]: ',params[paramId]);
+        
 
         // for every option in this category
         for (let optionId in param.options) {
 
           //const option = param.options[optionId];
 
-          debugger;
+          
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
           if (optionSelected) {
@@ -370,7 +370,7 @@
             //  label: option.label = formData[paramId],
             //};
             params[paramId].options[optionId] = param.options[optionId].label;
-            console.log('param.options[optionId.label]: ', param.options[optionId].label);
+            
     
           }
 
@@ -475,7 +475,7 @@
 
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
-
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
 
     initActions() {
@@ -487,9 +487,18 @@
     }
 
     add(menuProduct) {
-      // const thisCart = this;
+      const thisCart = this;
+      
+      /* generate HTML based on template */
 
-
+      const generatedHTML = templates.cartProduct(thisCart.data);
+      console.log('generatedHTML: ', generatedHTML);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      console.log('generatedDOM: ', generatedDOM);
+      thisCart.dom.productList = document.querySelector(select.containerOf.cart);
+      
+      console.log('thisCart.dom.productList: ', thisCart.dom.productList);
+      thisCart.dom.productList.appendChild(generatedDOM);
       console.log('adding product', menuProduct);
     }
   }
