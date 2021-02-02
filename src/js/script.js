@@ -108,10 +108,11 @@
     }
     renderInMenu() {
       const thisProduct = this;
-debugger;
+      debugger;
       /* generate HTML based on template */
 
       const generatedHTML = templates.menuProduct(thisProduct.data);
+      console.log('generatedHTML: ',generatedHTML);
 
       /* create element using utils.createElementFromHTML */
 
@@ -491,7 +492,7 @@ debugger;
       
       /* generate HTML based on template */
 
-      const generatedHTML = templates.cartProduct(thisCart.data);
+      const generatedHTML = templates.menuProduct(thisCart);
       console.log('generatedHTML: ', generatedHTML);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       console.log('generatedDOM: ', generatedDOM);
