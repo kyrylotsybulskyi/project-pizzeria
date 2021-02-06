@@ -108,11 +108,10 @@
     }
     renderInMenu() {
       const thisProduct = this;
-      debugger;
+      //debugger;
       /* generate HTML based on template */
 
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      console.log('generatedHTML: ',generatedHTML);
 
       /* create element using utils.createElementFromHTML */
 
@@ -355,14 +354,14 @@
           label: param.label,
           options: {}
         };
-        
+
 
         // for every option in this category
         for (let optionId in param.options) {
 
           //const option = param.options[optionId];
 
-          
+
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
           if (optionSelected) {
@@ -371,8 +370,8 @@
             //  label: option.label = formData[paramId],
             //};
             params[paramId].options[optionId] = param.options[optionId].label;
-            
-    
+
+
           }
 
         }
@@ -402,6 +401,7 @@
       //debugger;
 
       thisWidget.element = element;
+      console.log('element: ', element);
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
@@ -489,18 +489,55 @@
 
     add(menuProduct) {
       const thisCart = this;
-      
+
       /* generate HTML based on template */
 
-      const generatedHTML = templates.menuProduct(thisCart);
-      console.log('generatedHTML: ', generatedHTML);
+      const generatedHTML = templates.cartProduct(menuProduct);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-      console.log('generatedDOM: ', generatedDOM);
       thisCart.dom.productList = document.querySelector(select.containerOf.cart);
-      
-      console.log('thisCart.dom.productList: ', thisCart.dom.productList);
       thisCart.dom.productList.appendChild(generatedDOM);
       console.log('adding product', menuProduct);
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+      console.log('thisCart.products', thisCart.products);
+
+    }
+  }
+
+  class CartProduct {
+    constructor(menuProduct, element) {
+      const thisCartProduct = this;
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.params = menuProduct.params;
+      
+      thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();
+      console.log('thisCartProduct: ', thisCartProduct);
+
+    }
+
+    getElements(element) {
+      const thisCartProduct = this;
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper = element;
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+    }
+
+    initAmountWidget() {
+
+      const thisCartProduct = this;
+      //debugger;
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.amountWidgetElem);
+      
+      thisCartProduct.amountWidgetElem.addEventListener('updated', function () {
+        thisCartProduct.processOrder();
+      });
     }
   }
 
@@ -541,6 +578,7 @@
       const cartElem = document.querySelector(select.containerOf.cart);
       thisApp.cart = new Cart(cartElem);
     },
+    
   };
 
   app.init();
