@@ -475,7 +475,7 @@
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
       thisCart.dom.subTotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subTotalPrice);
-      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelector(select.cart.totalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
 
     }
@@ -503,10 +503,11 @@
       console.log('totalNumber: ',totalNumber);
       console.log('subtotalPrice: ',subTotalPrice);
       console.log('thisCart.totalPrice: ',thisCart.totalPrice);
+      console.log('thisCart.dom.subTotalPrice: ',thisCart.dom.subTotalPrice);
       
-      thisCart.dom.subTotalPrice.innerHTML = subTotalPrice;
+      //thisCart.dom.subTotalPrice.innerHTML = "sdjfsjkafc ";
       thisCart.dom.totalNumber.innerHTML = totalNumber;
-      thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
+      //thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
       thisCart.dom.deliveryFee.innerHTML = deliveryFee;
 
 
