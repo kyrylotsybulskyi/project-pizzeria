@@ -36,7 +36,8 @@
     cart: {
       productList: '.cart__order-summary',
       toggleTrigger: '.cart__summary',
-      totalNumber: '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+      totalNumber: `.cart__total-number`,
+      totalPrice: '.cart__total-price strong .cart__order-total .cart__order-price-sum strong',
       subtotalPrice: '.cart__order-subtotal .cart__order-price-sum strong',
       deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
       form: '.cart__order',
@@ -475,9 +476,9 @@
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
       thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
-      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelector(select.cart.totalPrice);
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
-      console.log('thisCart.dom: ',thisCart.dom);
+      //console.log('thisCart.dom.totalPrice: ',thisCart.dom.totalPrice);
 
     }
 
@@ -500,7 +501,7 @@
       }
       if (totalNumber > 0) {
         thisCart.totalPrice = subtotalPrice + deliveryFee;
-        console.log('thisCart.totalPrice: ',thisCart.totalPrice);
+        
       }
       console.log('totalNumber: ',totalNumber);
       console.log('subtotalPrice: ',subtotalPrice);
