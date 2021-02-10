@@ -451,7 +451,7 @@
       //debugger;
       const event = new CustomEvent('updated', {
         bubbles: true
-                
+
       });
       thisWidget.element.dispatchEvent(event);
     }
@@ -488,7 +488,6 @@
     initActions() {
       const thisCart = this;
       thisCart.dom.toggleTrigger.addEventListener('click', function () {
-
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
       thisCart.dom.productList.addEventListener('updated', function () {
@@ -514,7 +513,7 @@
       console.log('thisCart.totalPrice: ', thisCart.totalPrice);
       thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
       thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
-          debugger;
+      //debugger;
       if (thisCart.subtotalPrice > 0) {
         thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
         for (let totalPrice of thisCart.dom.totalPrice) {
@@ -544,11 +543,14 @@
       const thisCart = this;
 
       /* generate HTML based on template */
-
       const generatedHTML = templates.cartProduct(menuProduct);
+      /* create element using utils.createElementFromHTML */
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-      thisCart.dom.productList = document.querySelector(select.containerOf.cart);
-      thisCart.dom.productList.appendChild(generatedDOM);
+      /* find menu comtainer */
+      const cartContainer = thisCart.dom.productList;
+      /* add element to menu */
+      cartContainer.appendChild(generatedDOM);
+
       console.log('adding product', menuProduct);
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
       thisCart.update();
@@ -587,9 +589,9 @@
     initAmountWidget() {
 
       const thisCartProduct = this;
-      
+
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
-      
+
       thisCartProduct.dom.amountWidget.addEventListener('updated', function () {
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
         thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
