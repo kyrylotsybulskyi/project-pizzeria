@@ -495,7 +495,7 @@
       });
       thisCart.dom.productList.addEventListener('remove', function () {
         thisCart.remove(event.detail.cartProduct);
-      })
+      });
     }
 
     update() {
@@ -633,12 +633,12 @@
 
       thisCartProduct.dom.edit.addEventListener('click', function () {
         event.preventDefault();
-      })
+      });
 
       thisCartProduct.dom.remove.addEventListener('click', function () {
         event.preventDefault();
         thisCartProduct.remove();
-      })
+      });
     }
   }
 
