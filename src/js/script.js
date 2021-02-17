@@ -487,7 +487,9 @@
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
       //console.log('thisCart.dom.totalPrice: ',thisCart.dom.totalPrice);
-
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
     }
 
     initActions() {
@@ -500,6 +502,10 @@
       });
       thisCart.dom.productList.addEventListener('remove', function () {
         thisCart.remove(event.detail.cartProduct);
+      });
+      thisCart.dom.form.addEventListener('submit', function () {
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -575,6 +581,40 @@
 
     }
 
+    sendOrder() {
+      const thisCart = this;
+      const url = settings.db.url + '/' + settings.db.order;
+      thisCart.payload = {};
+      thisCart.payload.address = thisCart.dom.address;
+      thisCart.payload.phone = thisCart.dom.phone;
+      thisCart.payload.totalPrice = thisCart.dom.totalPrice;
+      thisCart.payload.subtotalPrice = thisCart.dom.subtotalPrice;
+      thisCart.payload.totalNumber = thisCart.dom.totalNumber;
+      thisCart.payload.deliveryFee = thisCart.dom.deliveryFee;
+      console.log('thisCart.payload: ', thisCart.payload);
+
+      for (let prod of thisCart.products) {
+        //debugger;
+        this.payload.products.push(prod.getData());
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringfy(thisCart.payload)
+      };
+      fetch(url, options)
+        .then(function (response) {
+          return response.json();
+        }).then(function (parsedResponse) {
+          console.log('parsedResponse', parsedResponse);
+        });
+    }
+
+
+
 
   }
 
@@ -644,6 +684,27 @@
         event.preventDefault();
         thisCartProduct.remove();
       });
+    }
+
+    getData() {
+      const thisCartProduct = this;
+
+      const productSummary = {};
+
+      productSummary.id = thisCartProduct.id;
+
+      productSummary.name = thisCartProduct.data.name;
+
+      productSummary.amount = thisCartProduct.amountWidget.value;
+
+      productSummary.priceSingle = thisCartProduct.priceSingle;
+
+      productSummary.price = thisCartProduct.price;
+
+      productSummary.params = thisCartProduct.getData();
+      console.log('productSummary: ',productSummary);
+
+      return productSummary;
     }
   }
 
