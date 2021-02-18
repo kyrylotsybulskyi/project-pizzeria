@@ -585,6 +585,8 @@
       const thisCart = this;
       const url = settings.db.url + '/' + settings.db.order;
       thisCart.payload = {};
+      thisCart.payload.id = thisCart.dom.id;
+      console.log('thisCart.dom: ', thisCart.dom);
       thisCart.payload.address = thisCart.dom.address;
       thisCart.payload.phone = thisCart.dom.phone;
       thisCart.payload.totalPrice = thisCart.dom.totalPrice;
@@ -595,6 +597,7 @@
 
       for (let prod of thisCart.products) {
         //debugger;
+        console.log('prod: ', prod);
         this.payload.products.push(prod.getData());
       }
 
@@ -612,9 +615,6 @@
           console.log('parsedResponse', parsedResponse);
         });
     }
-
-
-
 
   }
 
@@ -692,7 +692,7 @@
       const productSummary = {};
 
       productSummary.id = thisCartProduct.id;
-
+      console.log('productSummary.id: ',productSummary.id);
       productSummary.name = thisCartProduct.data.name;
 
       productSummary.amount = thisCartProduct.amountWidget.value;
