@@ -584,16 +584,16 @@
     sendOrder() {
       const thisCart = this;
       const url = settings.db.url + '/' + settings.db.order;
-      thisCart.payload = {};
-      thisCart.payload.id = thisCart.dom.id;
-      console.log('thisCart.dom: ', thisCart.dom);
-      thisCart.payload.address = thisCart.dom.address;
-      thisCart.payload.phone = thisCart.dom.phone;
-      thisCart.payload.totalPrice = thisCart.dom.totalPrice;
-      thisCart.payload.subtotalPrice = thisCart.dom.subtotalPrice;
-      thisCart.payload.totalNumber = thisCart.dom.totalNumber;
-      thisCart.payload.deliveryFee = thisCart.dom.deliveryFee;
-      console.log('thisCart.payload: ', thisCart.payload);
+
+      thisCart.payload = {
+        address: thisCart.dom.address.value,
+        phone: thisCart.dom.phone.value,
+        totalPrice: thisCart.totalPrice,
+        subtotalPrice: thisCart.subtotalPrice,
+        totalNumber: thisCart.totalNumber,
+        deliveryFee: thisCart.deliveryFee,
+        products: []
+      };
 
       for (let prod of thisCart.products) {
         //debugger;
@@ -606,7 +606,7 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringfy(thisCart.payload)
+        body: JSON.stringify(thisCart.payload)
       };
       fetch(url, options)
         .then(function (response) {
@@ -693,7 +693,7 @@
 
       productSummary.id = thisCartProduct.id;
       console.log('productSummary.id: ',productSummary.id);
-      productSummary.name = thisCartProduct.data.name;
+      productSummary.name = thisCartProduct.name;
 
       productSummary.amount = thisCartProduct.amountWidget.value;
 
@@ -701,7 +701,7 @@
 
       productSummary.price = thisCartProduct.price;
 
-      productSummary.params = thisCartProduct.getData();
+      productSummary.params = JSON.parse(JSON.stringify(thisCartProduct.params));
       console.log('productSummary: ',productSummary);
 
       return productSummary;
@@ -716,7 +716,7 @@
       //console.log('thisApp.data:', thisApp.data);
 
       for (let productData in thisApp.data.products) {
-        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
+        new Product(productData, thisApp.data.products[productData]);
       }
     },
 
